@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { Search, Bell, Menu, X } from "lucide-react";
+import { Search, Bell, Menu, X, Plus } from "lucide-react";
 
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -16,6 +16,7 @@ export default function Navbar() {
         name: "佐藤花子",
         avatar:
           "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
+        verified: true,
       },
       type: "like",
       content: "あなたの投稿にいいねしました",
@@ -27,27 +28,41 @@ export default function Navbar() {
         name: "鈴木一郎",
         avatar:
           "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-1.2.1&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
+        verified: false,
       },
       type: "comment",
       content: "あなたの投稿にコメントしました",
       timestamp: "10分前",
     },
+    {
+      id: 3,
+      user: {
+        name: "田中美咲",
+        avatar:
+          "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
+        verified: true,
+      },
+      type: "follow",
+      content: "あなたをフォローしました",
+      timestamp: "1時間前",
+    },
   ];
 
   return (
-    <nav className="bg-white border-b border-gray-100 sticky top-0 z-50">
+    <nav className="bg-white border-b border-gray-100 sticky top-0 z-50 backdrop-blur-lg bg-opacity-80">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16">
           <div className="flex items-center">
-            <Link href="/" className="flex items-center space-x-2">
-              <Image
-                src="/logo.png"
-                alt="ロゴ"
-                width={40}
-                height={40}
-                className="rounded-lg"
-              />
-              <span className="text-xl font-bold bg-gradient-to-r from-blue-600 to-blue-400 bg-clip-text text-transparent">
+            <Link href="/" className="flex items-center space-x-2 group">
+              <div className="relative w-10 h-10 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl overflow-hidden transform transition-transform group-hover:scale-105">
+                <Image
+                  src="/logo.png"
+                  alt="ロゴ"
+                  fill
+                  className="object-cover"
+                />
+              </div>
+              <span className="text-xl font-bold bg-gradient-to-r from-blue-600 to-blue-400 bg-clip-text text-transparent group-hover:from-blue-500 group-hover:to-blue-300 transition-all">
                 SocialApp
               </span>
             </Link>
@@ -55,20 +70,25 @@ export default function Navbar() {
 
           <div className="flex-1 flex items-center justify-center px-4">
             <div className="max-w-xl w-full">
-              <div className="relative">
+              <div className="relative group">
                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <Search className="h-5 w-5 text-gray-400" />
+                  <Search className="h-5 w-5 text-gray-400 group-hover:text-blue-500 transition-colors" />
                 </div>
                 <input
                   type="text"
                   placeholder="検索..."
-                  className="block w-full pl-10 pr-3 py-2 border border-gray-200 rounded-full text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  className="block w-full pl-10 pr-3 py-2.5 border border-gray-200 rounded-full text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all group-hover:border-blue-200"
                 />
               </div>
             </div>
           </div>
 
           <div className="flex items-center space-x-4">
+            <button className="hidden sm:flex items-center space-x-2 px-4 py-2 bg-blue-500 text-white rounded-full font-semibold hover:bg-blue-600 transition-colors">
+              <Plus className="w-5 h-5" />
+              <span>新規投稿</span>
+            </button>
+
             <div className="relative">
               <button
                 onClick={() => setIsNotificationsOpen(!isNotificationsOpen)}
@@ -83,11 +103,14 @@ export default function Navbar() {
               </button>
 
               {isNotificationsOpen && (
-                <div className="absolute right-0 mt-2 w-80 bg-white rounded-xl shadow-lg border border-gray-100 py-2">
-                  <div className="px-4 py-2 border-b border-gray-100">
+                <div className="absolute right-0 mt-2 w-96 bg-white rounded-xl shadow-lg border border-gray-100 py-2 transform transition-all duration-200 ease-out">
+                  <div className="px-4 py-2 border-b border-gray-100 flex items-center justify-between">
                     <h3 className="text-lg font-semibold text-gray-900">
                       通知
                     </h3>
+                    <button className="text-sm text-blue-500 hover:text-blue-600">
+                      すべて既読にする
+                    </button>
                   </div>
                   <div className="max-h-96 overflow-y-auto">
                     {notifications.map((notification) => (
@@ -96,13 +119,26 @@ export default function Navbar() {
                         className="px-4 py-3 hover:bg-gray-50 transition-colors"
                       >
                         <div className="flex items-start space-x-3">
-                          <Image
-                            src={notification.user.avatar}
-                            alt={notification.user.name}
-                            width={40}
-                            height={40}
-                            className="rounded-full"
-                          />
+                          <div className="relative">
+                            <Image
+                              src={notification.user.avatar}
+                              alt={notification.user.name}
+                              width={40}
+                              height={40}
+                              className="rounded-full"
+                            />
+                            {notification.user.verified && (
+                              <span className="absolute -bottom-1 -right-1 bg-blue-500 rounded-full p-1">
+                                <svg
+                                  className="w-3 h-3 text-white"
+                                  fill="currentColor"
+                                  viewBox="0 0 24 24"
+                                >
+                                  <path d="M22.5 12.5c0-1.58-.875-2.95-2.148-3.6.154-.435.238-.905.238-1.4 0-2.21-1.71-3.998-3.818-3.998-.47 0-.92.084-1.336.25C14.818 2.415 13.51 1.5 12 1.5s-2.816.917-3.437 2.25c-.415-.165-.866-.25-1.336-.25-2.11 0-3.818 1.79-3.818 4 0 .494.083.964.237 1.4-1.272.65-2.147 2.018-2.147 3.6 0 1.495.782 2.798 1.942 3.486-.02.17-.032.34-.032.514 0 2.21 1.708 4 3.818 4 .47 0 .92-.086 1.335-.25.62 1.334 1.926 2.25 3.437 2.25 1.512 0 2.818-.916 3.437-2.25.415.163.865.248 1.336.248 2.11 0 3.818-1.79 3.818-4 0-.174-.012-.344-.033-.513 1.158-.687 1.943-1.99 1.943-3.484zm-6.616-3.334l-4.334 6.5c-.145.217-.382.334-.625.334-.143 0-.288-.04-.416-.126l-.115-.094-2.415-2.415c-.293-.293-.293-.768 0-1.06s.768-.294 1.06 0l1.77 1.767 3.825-5.74c.23-.345.696-.436 1.04-.207.346.23.44.696.21 1.04z" />
+                                </svg>
+                              </span>
+                            )}
+                          </div>
                           <div className="flex-1 min-w-0">
                             <p className="text-sm text-gray-900">
                               <span className="font-semibold">
@@ -118,6 +154,11 @@ export default function Navbar() {
                       </div>
                     ))}
                   </div>
+                  <div className="px-4 py-2 border-t border-gray-100">
+                    <button className="w-full text-center text-sm text-blue-500 hover:text-blue-600">
+                      すべての通知を表示
+                    </button>
+                  </div>
                 </div>
               )}
             </div>
@@ -129,7 +170,7 @@ export default function Navbar() {
                   alt="プロフィール"
                   width={32}
                   height={32}
-                  className="rounded-full"
+                  className="rounded-full ring-2 ring-blue-500"
                 />
               </button>
             </div>
