@@ -3,16 +3,17 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import Layout from "@/components/layout/Layout";
 import { ThemeProvider } from "next-themes";
+import Head from "next/head";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "SNSアプリ",
+  title: "インターンシップマッチングアプリ",
   description: "モダンなSNSアプリケーション",
   icons: {
     icon: [
-      { url: "/icon.png" },
-      { url: "/icon-dark.png", media: "(prefers-color-scheme: dark)" },
+      { url: "/icon.svg" },
+      { url: "/icon-dark.svg", media: "(prefers-color-scheme: dark)" },
     ],
     apple: "/apple-icon.png",
   },
@@ -25,6 +26,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="ja" suppressHydrationWarning>
+
       <body className={inter.className}>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <Layout>{children}</Layout>

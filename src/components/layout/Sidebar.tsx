@@ -42,9 +42,15 @@ export default function Sidebar() {
             className="flex items-center space-x-3 group"
             onClick={() => setIsCollapsed(false)}
           >
-            <div className="relative w-10 h-10 bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 dark:from-indigo-600 dark:via-purple-600 dark:to-pink-600 rounded-xl overflow-hidden shadow-lg">
-              <Image src="/logo.png" alt="ロゴ" fill className="object-cover" />
-              <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-black/10" />
+            <div className="relative w-10 h-10 rounded-xl overflow-hidden">
+              <Image
+                src="/icon.svg"
+                alt="ロゴ"
+                fill
+                sizes="(max-width: 768px) 40px, 40px"
+                className="object-cover"
+                priority
+              />
             </div>
             {!isCollapsed && (
               <div className="flex flex-col">

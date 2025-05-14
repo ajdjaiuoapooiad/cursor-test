@@ -87,15 +87,16 @@ export default function Navbar() {
                 <motion.div
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
-                  className="relative w-10 h-10 bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 dark:from-indigo-600 dark:via-purple-600 dark:to-pink-600 rounded-xl overflow-hidden shadow-lg"
+                  className="relative w-10 h-10 rounded-xl overflow-hidden"
                 >
                   <Image
-                    src="/logo.png"
+                    src="/icon.svg"
                     alt="ロゴ"
                     fill
+                    sizes="(max-width: 768px) 40px, 40px"
                     className="object-cover"
+                    priority
                   />
-                  <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-black/10" />
                 </motion.div>
                 <div className="hidden sm:flex flex-col">
                   <span className="text-xl font-bold bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 dark:from-indigo-400 dark:via-purple-400 dark:to-pink-400 bg-clip-text text-transparent group-hover:from-indigo-500 group-hover:via-purple-500 group-hover:to-pink-500 transition-all">

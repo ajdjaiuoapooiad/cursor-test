@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Image from "next/image";
-import { Hash, TrendingUp, Fire, Clock, Star } from "lucide-react";
+import { Hash, TrendingUp, Flame, Clock, Star } from "lucide-react";
 import PostCard from "@/components/ui/PostCard";
 
 const trendingTopics = [
@@ -91,7 +91,7 @@ const trendingPosts = [
 
 const timeRanges = [
   { id: "today", name: "今日", icon: Clock },
-  { id: "week", name: "今週", icon: Fire },
+  { id: "week", name: "今週", icon: Flame },
   { id: "month", name: "今月", icon: Star },
 ];
 
