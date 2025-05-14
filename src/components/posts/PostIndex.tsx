@@ -34,19 +34,22 @@ export default function PostIndex() {
   const [posts, setPosts] = useState(DUMMY_POSTS);
 
   return (
-    <div className="space-y-6">
-      <PostCreate />
-      <div className="space-y-4">
-        {posts.map((post) => (
-          <motion.div
-            key={post.id}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.3 }}
-          >
-            <PostCard post={post} />
-          </motion.div>
-        ))}
+    <div className="max-w-3xl mx-auto">
+      <div className="space-y-4 sm:space-y-6 md:space-y-8">
+        <PostCreate />
+        <div className="space-y-4 sm:space-y-6">
+          {posts.map((post) => (
+            <motion.div
+              key={post.id}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.3 }}
+              className="transform hover:scale-[1.01] transition-transform"
+            >
+              <PostCard post={post} />
+            </motion.div>
+          ))}
+        </div>
       </div>
     </div>
   );
