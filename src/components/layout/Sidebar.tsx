@@ -12,6 +12,11 @@ import {
   LogOut,
   Plus,
   Sparkles,
+  Bookmark,
+  MessageSquare,
+  Users,
+  TrendingUp,
+  Hash,
 } from "lucide-react";
 import { motion } from "framer-motion";
 import Image from "next/image";
@@ -22,9 +27,18 @@ export default function Sidebar() {
 
   const navItems = [
     { href: "/", label: "ホーム", icon: Home },
-    { href: "/search", label: "検索", icon: Search },
+    { href: "/trending", label: "トレンド", icon: TrendingUp },
+    { href: "/messages", label: "メッセージ", icon: MessageSquare },
+    { href: "/bookmarks", label: "ブックマーク", icon: Bookmark },
+    { href: "/friends", label: "友達", icon: Users },
     { href: "/notifications", label: "通知", icon: Bell },
-    { href: "/profile", label: "プロフィール", icon: User },
+    { href: "/hashtags", label: "ハッシュタグ", icon: Hash },
+  ];
+
+  const trendingTopics = [
+    { name: "プログラミング", count: "2.5K" },
+    { name: "デザイン", count: "1.8K" },
+    { name: "テクノロジー", count: "1.2K" },
   ];
 
   return (
@@ -104,6 +118,30 @@ export default function Sidebar() {
             })}
           </div>
         </nav>
+
+        {/* トレンドトピック */}
+        {!isCollapsed && (
+          <div className="px-4 py-4 border-t border-gray-100/50 dark:border-gray-800/50">
+            <h3 className="text-sm font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-2">
+              トレンドトピック
+            </h3>
+            <div className="space-y-2">
+              {trendingTopics.map((topic) => (
+                <Link
+                  key={topic.name}
+                  href={`/hashtags/${topic.name}`}
+                  className="flex items-center justify-between p-2 rounded-lg text-gray-600 dark:text-gray-300 hover:bg-gray-50/50 dark:hover:bg-gray-800/50 transition-colors"
+                >
+                  <div className="flex items-center space-x-2">
+                    <Hash className="w-4 h-4 text-gray-400" />
+                    <span className="text-sm">#{topic.name}</span>
+                  </div>
+                  <span className="text-xs text-gray-500">{topic.count}</span>
+                </Link>
+              ))}
+            </div>
+          </div>
+        )}
 
         {/* 設定とログアウト */}
         <div className="p-4 border-t border-gray-100/50 dark:border-gray-800/50">
