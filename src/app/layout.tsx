@@ -11,10 +11,8 @@ export const metadata: Metadata = {
   title: "インターンシップマッチングアプリ",
   description: "モダンなSNSアプリケーション",
   icons: {
-    icon: [
-      { url: "/icon.svg" },
-      { url: "/icon-dark.svg", media: "(prefers-color-scheme: dark)" },
-    ],
+    icon: "/icon.svg",
+    shortcut: "/icon.svg",
     apple: "/apple-icon.png",
   },
 };
@@ -26,7 +24,6 @@ export default function RootLayout({
 }) {
   return (
     <html lang="ja" suppressHydrationWarning>
-
       <body className={inter.className}>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <Layout>{children}</Layout>
