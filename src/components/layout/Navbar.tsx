@@ -61,7 +61,7 @@ export default function Navbar() {
                 <motion.div
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
-                  className="relative w-7 h-7 sm:w-10 sm:h-10 rounded-xl overflow-hidden ring-2 ring-indigo-500/20 dark:ring-indigo-400/20 group-hover:ring-indigo-500/40 dark:group-hover:ring-indigo-400/40 transition-all"
+                  className="relative w-7 h-7 sm:w-10 sm:h-10 rounded-xl overflow-hidden"
                 >
                   <Image
                     src="/icon.svg"
