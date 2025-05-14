@@ -87,19 +87,19 @@ export default function Navbar() {
                 <motion.div
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
-                  className="relative w-10 h-10 rounded-xl overflow-hidden"
+                  className="relative w-8 h-8 sm:w-10 sm:h-10 rounded-xl overflow-hidden"
                 >
                   <Image
                     src="/icon.svg"
                     alt="ロゴ"
                     fill
-                    sizes="(max-width: 768px) 40px, 40px"
+                    sizes="(max-width: 768px) 32px, 40px"
                     className="object-cover"
                     priority
                   />
                 </motion.div>
                 <div className="hidden sm:flex flex-col">
-                  <span className="text-xl font-bold bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 dark:from-indigo-400 dark:via-purple-400 dark:to-pink-400 bg-clip-text text-transparent group-hover:from-indigo-500 group-hover:via-purple-500 group-hover:to-pink-500 transition-all">
+                  <span className="text-lg sm:text-xl font-bold bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 dark:from-indigo-400 dark:via-purple-400 dark:to-pink-400 bg-clip-text text-transparent group-hover:from-indigo-500 group-hover:via-purple-500 group-hover:to-pink-500 transition-all">
                     SocialApp
                   </span>
                   <span className="text-xs text-gray-500 dark:text-gray-400 flex items-center">
@@ -111,7 +111,7 @@ export default function Navbar() {
             </div>
 
             {/* 中央：検索バー */}
-            <div className="hidden md:flex flex-1 items-center justify-center px-4">
+            <div className="hidden md:flex items-center flex-1 justify-center px-4">
               <div className="max-w-xl w-full">
                 <motion.div
                   whileHover={{ scale: 1.02 }}
@@ -123,7 +123,7 @@ export default function Navbar() {
                   <input
                     type="text"
                     placeholder="検索..."
-                    className="block w-full pl-10 pr-3 py-2.5 border border-gray-200/50 dark:border-gray-700/50 rounded-full text-gray-900 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-500 bg-white/50 dark:bg-gray-800/50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all group-hover:border-indigo-200 dark:group-hover:border-indigo-700 shadow-sm"
+                    className="block w-full pl-10 pr-3 py-2 border border-gray-200/50 dark:border-gray-700/50 rounded-full text-gray-900 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-500 bg-white/50 dark:bg-gray-800/50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all group-hover:border-indigo-200 dark:group-hover:border-indigo-700 shadow-sm"
                   />
                 </motion.div>
               </div>
@@ -150,9 +150,9 @@ export default function Navbar() {
                 aria-label="テーマ切り替え"
               >
                 {mounted && theme === "dark" ? (
-                  <Sun className="h-6 w-6" />
+                  <Sun className="h-5 w-5" />
                 ) : (
-                  <Moon className="h-6 w-6" />
+                  <Moon className="h-5 w-5" />
                 )}
               </motion.button>
 
@@ -165,7 +165,7 @@ export default function Navbar() {
                   className="p-2 text-gray-500 dark:text-gray-400 hover:text-indigo-500 dark:hover:text-indigo-400 hover:bg-indigo-50 dark:hover:bg-gray-800 rounded-full transition-colors relative"
                   aria-label="通知"
                 >
-                  <Bell className="h-6 w-6" />
+                  <Bell className="h-5 w-5" />
                   {notifications.length > 0 && (
                     <motion.span
                       initial={{ scale: 0 }}
@@ -262,35 +262,15 @@ export default function Navbar() {
                   className="flex items-center space-x-2 p-2 hover:bg-gray-50/50 dark:hover:bg-gray-800/50 rounded-full transition-colors"
                   aria-label="プロフィール"
                 >
-                  <div className="relative">
+                  <div className="relative w-8 h-8 rounded-full overflow-hidden">
                     <Image
                       src={user.avatar}
                       alt={user.name}
-                      width={32}
-                      height={32}
-                      className="rounded-full ring-2 ring-indigo-500 dark:ring-indigo-400"
+                      fill
+                      sizes="32px"
+                      className="object-cover"
                     />
-                    {user.verified && (
-                      <span className="absolute -bottom-1 -right-1 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-full p-1 shadow-lg">
-                        <svg
-                          className="w-3 h-3 text-white"
-                          fill="currentColor"
-                          viewBox="0 0 24 24"
-                        >
-                          <path d="M22.5 12.5c0-1.58-.875-2.95-2.148-3.6.154-.435.238-.905.238-1.4 0-2.21-1.71-3.998-3.818-3.998-.47 0-.92.084-1.336.25C14.818 2.415 13.51 1.5 12 1.5s-2.816.917-3.437 2.25c-.415-.165-.866-.25-1.336-.25-2.11 0-3.818 1.79-3.818 4 0 .494.083.964.237 1.4-1.272.65-2.147 2.018-2.147 3.6 0 1.495.782 2.798 1.942 3.486-.02.17-.032.34-.032.514 0 2.21 1.708 4 3.818 4 .47 0 .92-.086 1.335-.25.62 1.334 1.926 2.25 3.437 2.25 1.512 0 2.818-.916 3.437-2.25.415.163.865.248 1.336.248 2.11 0 3.818-1.79 3.818-4 0-.174-.012-.344-.033-.513 1.158-.687 1.943-1.99 1.943-3.484zm-6.616-3.334l-4.334 6.5c-.145.217-.382.334-.625.334-.143 0-.288-.04-.416-.126l-.115-.094-2.415-2.415c-.293-.293-.293-.768 0-1.06s.768-.294 1.06 0l1.77 1.767 3.825-5.74c.23-.345.696-.436 1.04-.207.346.23.44.696.21 1.04z" />
-                        </svg>
-                      </span>
-                    )}
                   </div>
-                  <div className="hidden md:block text-left">
-                    <p className="text-sm font-medium text-gray-900 dark:text-gray-100">
-                      {user.name}
-                    </p>
-                    <p className="text-xs text-gray-500 dark:text-gray-400">
-                      {user.username}
-                    </p>
-                  </div>
-                  <ChevronDown className="hidden md:block w-4 h-4 text-gray-400 dark:text-gray-500" />
                 </motion.button>
 
                 {/* プロフィールドロップダウン */}
@@ -349,9 +329,9 @@ export default function Navbar() {
                 aria-label="メニュー"
               >
                 {isMenuOpen ? (
-                  <X className="h-6 w-6" />
+                  <X className="h-5 w-5" />
                 ) : (
-                  <Menu className="h-6 w-6" />
+                  <Menu className="h-5 w-5" />
                 )}
               </motion.button>
             </div>
