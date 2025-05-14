@@ -1,82 +1,147 @@
-'use client';
+"use client";
 
-import Link from 'next/link';
-import { usePathname } from 'next/navigation';
-import { Bookmark, MessageSquare, Settings, Users, TrendingUp, Hash, Bell } from 'lucide-react';
+import { useState } from "react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import {
+  Home,
+  Search,
+  Bell,
+  User,
+  Settings,
+  LogOut,
+  Plus,
+  Sparkles,
+} from "lucide-react";
+import { motion } from "framer-motion";
+import Image from "next/image";
 
-const Sidebar = () => {
+export default function Sidebar() {
   const pathname = usePathname();
+  const [isCollapsed, setIsCollapsed] = useState(false);
 
-  const sidebarItems = [
-    { href: '/trending', label: 'トレンド', icon: TrendingUp },
-    { href: '/messages', label: 'メッセージ', icon: MessageSquare },
-    { href: '/bookmarks', label: 'ブックマーク', icon: Bookmark },
-    { href: '/friends', label: '友達', icon: Users },
-    { href: '/notifications', label: '通知', icon: Bell },
-    { href: '/hashtags', label: 'ハッシュタグ', icon: Hash },
-    { href: '/settings', label: '設定', icon: Settings },
+  const navItems = [
+    { href: "/", label: "ホーム", icon: Home },
+    { href: "/search", label: "検索", icon: Search },
+    { href: "/notifications", label: "通知", icon: Bell },
+    { href: "/profile", label: "プロフィール", icon: User },
   ];
 
   return (
-    <aside className="hidden lg:flex flex-col w-64 bg-white border-r border-gray-200 h-screen fixed left-0 top-0 pt-16">
-      <div className="p-4">
-        <div className="space-y-1">
-          {sidebarItems.map((item) => {
-            const Icon = item.icon;
-            const isActive = pathname === item.href;
-            
-            return (
-              <Link
-                key={item.href}
-                href={item.href}
-                className={`flex items-center space-x-3 p-3 rounded-lg transition-all duration-200 group
-                  ${isActive 
-                    ? 'bg-blue-50 text-blue-600' 
-                    : 'text-gray-600 hover:bg-gray-50 hover:text-blue-600'
+    <motion.aside
+      initial={{ width: 280 }}
+      animate={{ width: isCollapsed ? 80 : 280 }}
+      transition={{ type: "spring", stiffness: 300, damping: 30 }}
+      className="fixed left-0 top-0 h-screen bg-white/90 dark:bg-gray-900/90 backdrop-blur-xl border-r border-gray-100/50 dark:border-gray-800/50 z-40 hidden lg:block"
+    >
+      <div className="flex flex-col h-full">
+        {/* ロゴ */}
+        <div className="p-4">
+          <Link
+            href="/"
+            className="flex items-center space-x-3 group"
+            onClick={() => setIsCollapsed(false)}
+          >
+            <div className="relative w-10 h-10 bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 dark:from-indigo-600 dark:via-purple-600 dark:to-pink-600 rounded-xl overflow-hidden shadow-lg">
+              <Image src="/logo.png" alt="ロゴ" fill className="object-cover" />
+              <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-black/10" />
+            </div>
+            {!isCollapsed && (
+              <div className="flex flex-col">
+                <span className="text-xl font-bold bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 dark:from-indigo-400 dark:via-purple-400 dark:to-pink-400 bg-clip-text text-transparent group-hover:from-indigo-500 group-hover:via-purple-500 group-hover:to-pink-500 transition-all">
+                  SocialApp
+                </span>
+                <span className="text-xs text-gray-500 dark:text-gray-400 flex items-center">
+                  <Sparkles className="w-3 h-3 mr-1" />
+                  モダンなSNS
+                </span>
+              </div>
+            )}
+          </Link>
+        </div>
+
+        {/* 新規投稿ボタン */}
+        <div className="px-4 mb-4">
+          <motion.button
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
+            className="w-full flex items-center justify-center space-x-2 px-4 py-2.5 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 dark:from-indigo-600 dark:via-purple-600 dark:to-pink-600 text-white rounded-full font-semibold hover:from-indigo-600 hover:via-purple-600 hover:to-pink-600 dark:hover:from-indigo-700 dark:hover:via-purple-700 dark:hover:to-pink-700 transition-all shadow-lg hover:shadow-xl"
+          >
+            <Plus className="w-5 h-5" />
+            {!isCollapsed && <span>新規投稿</span>}
+          </motion.button>
+        </div>
+
+        {/* ナビゲーション */}
+        <nav className="flex-1 px-2">
+          <div className="space-y-1">
+            {navItems.map((item) => {
+              const Icon = item.icon;
+              const isActive = pathname === item.href;
+
+              return (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  className={`flex items-center space-x-3 px-4 py-3 rounded-lg transition-colors ${
+                    isActive
+                      ? "bg-indigo-50 dark:bg-indigo-900/20 text-indigo-600 dark:text-indigo-400"
+                      : "text-gray-700 dark:text-gray-300 hover:bg-gray-50/50 dark:hover:bg-gray-800/50"
                   }`}
-              >
-                <Icon className={`w-5 h-5 transition-transform duration-200 group-hover:scale-110
-                  ${isActive ? 'text-blue-600' : 'text-gray-500 group-hover:text-blue-600'}`} 
-                />
-                <span className="font-medium">{item.label}</span>
-                {isActive && (
-                  <div className="absolute left-0 w-1 h-8 bg-blue-600 rounded-r-full" />
-                )}
-              </Link>
-            );
-          })}
-        </div>
-
-        {/* トレンドトピック */}
-        <div className="mt-8">
-          <h3 className="px-3 text-sm font-semibold text-gray-500 uppercase tracking-wider">
-            トレンドトピック
-          </h3>
-          <div className="mt-2 space-y-1">
-            {['#プログラミング', '#デザイン', '#テクノロジー'].map((topic) => (
-              <Link
-                key={topic}
-                href={`/hashtags/${topic.slice(1)}`}
-                className="flex items-center space-x-2 p-3 rounded-lg text-gray-600 hover:bg-gray-50 hover:text-blue-600 transition-all duration-200"
-              >
-                <Hash className="w-4 h-4 text-gray-400" />
-                <span className="text-sm">{topic}</span>
-              </Link>
-            ))}
+                >
+                  <Icon className="w-5 h-5" />
+                  {!isCollapsed && (
+                    <span className="font-medium">{item.label}</span>
+                  )}
+                </Link>
+              );
+            })}
           </div>
-        </div>
+        </nav>
 
-        {/* フッター */}
-        <div className="mt-auto pt-4 border-t border-gray-200">
-          <div className="px-3 py-2">
-            <p className="text-xs text-gray-500">
-              © 2024 SNSアプリ
-            </p>
+        {/* 設定とログアウト */}
+        <div className="p-4 border-t border-gray-100/50 dark:border-gray-800/50">
+          <div className="space-y-1">
+            <Link
+              href="/settings"
+              className={`flex items-center space-x-3 px-4 py-3 rounded-lg transition-colors ${
+                pathname === "/settings"
+                  ? "bg-indigo-50 dark:bg-indigo-900/20 text-indigo-600 dark:text-indigo-400"
+                  : "text-gray-700 dark:text-gray-300 hover:bg-gray-50/50 dark:hover:bg-gray-800/50"
+              }`}
+            >
+              <Settings className="w-5 h-5" />
+              {!isCollapsed && <span className="font-medium">設定</span>}
+            </Link>
+            <button className="w-full flex items-center space-x-3 px-4 py-3 text-red-600 dark:text-red-400 hover:bg-gray-50/50 dark:hover:bg-gray-800/50 rounded-lg transition-colors">
+              <LogOut className="w-5 h-5" />
+              {!isCollapsed && <span className="font-medium">ログアウト</span>}
+            </button>
           </div>
         </div>
       </div>
-    </aside>
-  );
-};
 
-export default Sidebar; 
+      {/* 折りたたみボタン */}
+      <button
+        onClick={() => setIsCollapsed(!isCollapsed)}
+        className="absolute -right-3 top-1/2 transform -translate-y-1/2 w-6 h-6 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-full shadow-lg flex items-center justify-center text-gray-500 dark:text-gray-400 hover:text-indigo-500 dark:hover:text-indigo-400 transition-colors"
+      >
+        <svg
+          className={`w-4 h-4 transform transition-transform ${
+            isCollapsed ? "rotate-180" : ""
+          }`}
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M9 5l7 7-7 7"
+          />
+        </svg>
+      </button>
+    </motion.aside>
+  );
+}

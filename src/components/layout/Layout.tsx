@@ -1,7 +1,7 @@
-'use client';
+"use client";
 
-import Navbar from './Navbar';
-import Sidebar from './Sidebar';
+import Navbar from "./Navbar";
+import Sidebar from "./Sidebar";
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -13,12 +13,9 @@ const Layout = ({ children }: LayoutProps) => {
       <Navbar />
       <Sidebar />
       <main className="lg:ml-64 pt-16">
-        <div className="max-w-screen-xl mx-auto px-4 py-8">
-          {children}
-        </div>
+        <div className="max-w-screen-xl mx-auto px-4 py-8">{children}</div>
       </main>
     </div>
   );
 };
-
-export default Layout; 
+export default Layout;

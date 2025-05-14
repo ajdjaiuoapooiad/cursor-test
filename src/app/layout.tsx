@@ -9,6 +9,13 @@ const inter = Inter({ subsets: ["latin"] });
 export const metadata: Metadata = {
   title: "SNSアプリ",
   description: "モダンなSNSアプリケーション",
+  icons: {
+    icon: [
+      { url: "/icon.png" },
+      { url: "/icon-dark.png", media: "(prefers-color-scheme: dark)" },
+    ],
+    apple: "/apple-icon.png",
+  },
 };
 
 export default function RootLayout({
