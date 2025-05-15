@@ -1,14 +1,39 @@
 "use client";
 
+import { useState, useEffect } from "react";
+import { motion } from "framer-motion";
+import {
+  Home,
+  Search,
+  Bell,
+  Settings,
+  LogOut,
+  Sparkles,
+  TrendingUp,
+  Users,
+} from "lucide-react";
+import Image from "next/image";
+import Link from "next/link";
+import { useTheme } from "next-themes";
 import Navbar from "./Navbar";
 import Sidebar from "./Sidebar";
-import Image from "next/image";
 
 interface LayoutProps {
   children: React.ReactNode;
 }
 
 const Layout = ({ children }: LayoutProps) => {
+  const [mounted, setMounted] = useState(false);
+  const { theme, setTheme } = useTheme();
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) {
+    return null;
+  }
+
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
       <Navbar />
